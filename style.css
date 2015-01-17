@@ -1,0 +1,24 @@
+video {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#progressbar {
+  height: 20px;
+  width: 100%;
+  background-color: gray;
+  border-radius: 10px;
+}
+#playedbar {
+  height: 100%;
+  width: 0;
+  border-radius: 10px;
+  background-color: rgb(9, 78, 87);
+}
+#controls {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#videoForm {
+  text-align: center;
+}

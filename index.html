@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>YuanVideo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <video width="800" height="600" id="theVideo" controls></video>
+    <div id="controls">
+      <div id="progressbar">
+	<div id="playedbar"></div>
+      </div>
+    </div>
+    <div>
+      <form id="videoForm" action="#" method="get">
+	<input type="input" size="100" name="videoUrl" id="videoUrl" placeholder="Enter your video URL here" />
+	<input type="submit" />
+      </form>
+    </div>
+    <script type="text/javascript">
+      window.addEventListener("load", initAll, false);
+      function initAll(){
+	var video = document.querySelector("#theVideo");
+	var progressbar = document.querySelector("#progressbar"),
+	    playedbar = document.querySelector("#playedbar"),
+	    togglePlay = document.querySelector("#togglePlay"),
+	    videoForm = document.querySelector("#videoForm");
+	    videoUrl = document.querySelector("#videoUrl");
+
+	videoForm.addEventListener("submit", videoFormSubmitHandler, false); 
+	function videoFormSubmitHandler(event) {
+	  event.preventDefault();
+	  event.stopPropagation();
+	  video.src = videoUrl.value;
+	  video.play();
+	}
+
+	progressbar.addEventListener("click", seekVideoHandler, false);
+	function seekVideoHandler(event) {
+	  var x = event.offsetX, length = parseInt(window.getComputedStyle(progressbar).width);
+	  var percentage = x / length * 100 + "%";
+	  var seekToTime = x / length * video.duration;
+	  console.log("seek to ", percentage);
+	  video.currentTime = seekToTime;
+	}
+	progressbar.addEventListener("mousemove", mousemoveHandler, false);
+	function mousemoveHandler(event){
+	  console.log("mouse move");
+	  var x = event.offsetX, length = parseInt(window.getComputedStyle(progressbar).width);
+	  var title = formatTime(video.duration * (x / length));
+	  progressbar.title = title;
+	}
+
+	video.addEventListener("timeupdate", timeupdateHandler, false);
+	function timeupdateHandler(){
+	  var percentage = video.currentTime / video.duration * 100 + "%"; 
+	  playedbar.style.width = percentage;
+
+	}
+      }
+
+      function formatTime(seconds) {
+	seconds = parseInt(seconds);
+	var ms = seconds % 3600;
+	var hs = (seconds - ms) / 3600; // Hours
+	var ss = ms % 60; // Seconds
+	var minutes = (ms - ss) / 60; // Minutes
+	return (hs > 0 ? (hs + ":") : "") + (minutes > 9 ? minutes : "0" + minutes) + ":" + (ss > 9 ? ss : "0" + ss);
+      }
+    </script>
+  </body>
+</html>
