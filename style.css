@@ -22,3 +22,7 @@ video {
 #videoForm {
   text-align: center;
 }
+
+#videoList li.currentVideo {
+  background-color: yellow;
+}
