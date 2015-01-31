@@ -2,6 +2,7 @@ window.addEventListener("load", initAll, false);
 function initAll(){
   var video = document.querySelector("#theVideo");
   var progressbar = document.querySelector("#progressbar"),
+      progressSpan = document.querySelector("#progressSpan"),
       playedbar = document.querySelector("#playedbar"),
       togglePlay = document.querySelector("#togglePlay"),
       videoForm = document.querySelector("#videoForm"),
@@ -66,6 +67,29 @@ function initAll(){
     var percentage = video.currentTime / video.duration * 100 + "%"; 
     playedbar.style.width = percentage;
 
+  }
+
+  video.addEventListener("progress", progressHandler, false);
+  function progressHandler(){
+    console.log("progress:", video.buffered);
+    var ranges = [];
+    for (var i = 0; i < video.buffered.length; i++) {
+      ranges.push([
+	video.buffered.start(i),
+	video.buffered.end(i)
+	]);
+    }
+    var spans = progressSpan.getElementsByTagName("span"); 
+    while(spans.length < video.buffered.length){
+      progressSpan.appendChild(document.createElement("span"));
+    }
+    while(spans.length > video.buffered.length){
+      progressSpan.removeChild(progressSpan.lastChild);
+    }
+    for (var i = 0; i < video.buffered.length; i++){
+      spans[i].style.left = Math.round((100 / video.duration) * ranges[i][0]) + "%";
+      spans[i].style.width = Math.round((100 / video.duration) * (ranges[i][1] - ranges[i][0])) + "%";
+    }
   }
 }
 

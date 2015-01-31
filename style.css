@@ -4,9 +4,27 @@ video {
   margin-right: auto;
 }
 #progressbar {
+  position: relative;
   height: 20px;
   width: 100%;
   background-color: gray;
+  border-radius: 10px;
+}
+#progressSpan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+#progressSpan > span{
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  height: 100%;
+  background: lightgray;
   border-radius: 10px;
 }
 #playedbar {
@@ -14,6 +32,10 @@ video {
   width: 0;
   border-radius: 10px;
   background-color: rgb(9, 78, 87);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }
 #controls {
   margin-top: 10px;
