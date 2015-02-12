@@ -49,6 +49,14 @@ video {
   background-color: yellow;
 }
 
+#buttons {
+}
+
+#buttons > div{
+  float: left;
+  margin-right: 20px;
+}
+
 #togglePlayButton {
   width: 50px;
   height: 30px;

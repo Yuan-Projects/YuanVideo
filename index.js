@@ -8,6 +8,8 @@ function initAll(){
       videoForm = document.querySelector("#videoForm"),
       videoUrl = document.querySelector("#videoUrl"),
       videoList = document.getElementById("videoList"), 
+      currentTimeElem = document.getElementById("currentTime"), 
+      durationElem = document.getElementById("duration"), 
       togglePlayButton = document.getElementById("togglePlayButton"); 
 
   ajax("api.php", function(data) {
@@ -89,6 +91,12 @@ function initAll(){
     var percentage = video.currentTime / video.duration * 100 + "%"; 
     playedbar.style.width = percentage;
 
+    currentTimeElem.innerHTML = formatTime(video.currentTime);
+  }
+
+  video.addEventListener("durationchange", durationChangeHandler, false);
+  function durationChangeHandler(event){
+    durationElem.innerHTML = formatTime(video.duration);
   }
 
   video.addEventListener("progress", progressHandler, false);
