@@ -7,7 +7,8 @@ function initAll(){
       togglePlay = document.querySelector("#togglePlay"),
       videoForm = document.querySelector("#videoForm"),
       videoUrl = document.querySelector("#videoUrl"),
-      videoList = document.getElementById("videoList"); 
+      videoList = document.getElementById("videoList"), 
+      togglePlayButton = document.getElementById("togglePlayButton"); 
 
   ajax("api.php", function(data) {
     var videos = JSON.parse(data);
@@ -18,6 +19,16 @@ function initAll(){
       });
     }
   });
+
+  togglePlayButton.addEventListener("click", togglePlayHandler, false);
+  function togglePlayHandler(event){
+    if (!video.currentSrc) return ;
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
 
   videoList.addEventListener("click", videoListClickHandler, false);
   function videoListClickHandler(event){
@@ -61,6 +72,17 @@ function initAll(){
     var title = formatTime(video.duration * (x / length));
     progressbar.title = title;
   }
+
+  video.addEventListener("play", playHandler, false);
+  function playHandler(event){
+    togglePlayButton.innerHTML = "Pause";
+  }
+
+  video.addEventListener("pause", pauseHandler, false);
+  function pauseHandler(event){
+    togglePlayButton.innerHTML = "Play";
+  }
+
 
   video.addEventListener("timeupdate", timeupdateHandler, false);
   function timeupdateHandler(){
