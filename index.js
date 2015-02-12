@@ -10,6 +10,7 @@ function initAll(){
       videoList = document.getElementById("videoList"), 
       currentTimeElem = document.getElementById("currentTime"), 
       durationElem = document.getElementById("duration"), 
+      fullScreenButton = document.getElementById("fullScreen"), 
       togglePlayButton = document.getElementById("togglePlayButton"); 
 
   ajax("api.php", function(data) {
@@ -29,6 +30,20 @@ function initAll(){
       video.play();
     } else {
       video.pause();
+    }
+  }
+
+  fullScreenButton.addEventListener("click", fullScreenVideo, false);
+  function fullScreenVideo() {
+    var elem = video;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
     }
   }
 
